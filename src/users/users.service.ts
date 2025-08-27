@@ -21,7 +21,9 @@ export class UsersService {
     // Check if user already exists
     const existing = await this.usersRepository.findOne({ where: { email } });
     if (existing) {
-      throw new ConflictException('User with this email already exists');
+      throw new ConflictException(
+        'User with this email already exists! Please login.',
+      );
     }
 
     const user = this.usersRepository.create({
@@ -37,15 +39,6 @@ export class UsersService {
    */
   async findByEmail(email: string): Promise<User | null> {
     return await this.usersRepository.findOne({ where: { email } });
-  }
-
-  /**
-   * Find all users (for admin purposes)
-   */
-  async findAllUsers(): Promise<User[]> {
-    return await this.usersRepository.find({
-      select: ['id', 'email', 'createdAt', 'updatedAt'],
-    });
   }
 
   /**

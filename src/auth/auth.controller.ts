@@ -15,7 +15,6 @@ import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto/user-login.dto';
 import {
   LoginResponse,
-  RefreshTokenResponse,
   SignupResponse,
   type AuthenticatedRequest,
   type UserResponse,
@@ -84,17 +83,5 @@ export class AuthController {
       email: req.user.email,
       createdAt: req.user.user?.createdAt || new Date(), // Fallback
     };
-  }
-
-  /**
-   * Refresh Token (Optional - for better UX)
-   */
-  @UseGuards(JwtAuthGuard)
-  @Post('refreshtoken')
-  @HttpCode(HttpStatus.OK)
-  async refreshToken(
-    @Request() req: AuthenticatedRequest,
-  ): Promise<RefreshTokenResponse> {
-    return await this.authService.refreshToken(req.user.userId);
   }
 }

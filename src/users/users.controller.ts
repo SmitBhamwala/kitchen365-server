@@ -4,13 +4,7 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  /**
-   * Get all users (for admin purposes)
-   */
-  @Get()
-  findAll() {
-    return this.usersService.findAllUsers();
-  }
+
   /**
    * Get user by id
    * @param id User ID

@@ -26,7 +26,9 @@ export class AuthService {
     try {
       const existingUser = await this.usersService.findByEmail(email);
       if (existingUser) {
-        throw new ConflictException('User with this email already exists');
+        throw new ConflictException(
+          'User with this email already exists! Please login.',
+        );
       }
 
       const hashedPassword = await bcrypt.hash(password, genSaltSync());
@@ -51,7 +53,7 @@ export class AuthService {
     try {
       const user = await this.usersService.findByEmail(email);
       if (!user) {
-        throw new UnauthorizedException('Invalid credentials');
+        throw new UnauthorizedException('User does not exist! Please sign up.');
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -96,29 +98,5 @@ export class AuthService {
         createdAt: user.createdAt,
       },
     };
-  }
-
-  /**
-   * Refresh token for extended sessions
-   */
-  async refreshToken(userId: string): Promise<{ token: string }> {
-    const user = await this.usersService.findById(userId);
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-
-    const payload = {
-      sub: user.id,
-      email: user.email,
-      iat: Math.floor(Date.now() / 1000),
-    };
-
-    const token = await this.jwtService.signAsync(payload);
-
-    if (!token) {
-      throw new InternalServerErrorException('Failed to generate token');
-    }
-
-    return { token };
   }
 }
