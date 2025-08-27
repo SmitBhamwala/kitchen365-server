@@ -1,0 +1,15 @@
+# Enforce LF for all text files in the repo
+* text=auto eol=lf
+
+# Ensure shell scripts keep LF
+*.sh text eol=lf
+
+# Keep Windows batch files as CRLF if needed (optional)
+*.bat text eol=crlf
+
+# Ensure common source files use LF
+*.ts text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
