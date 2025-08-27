@@ -7,7 +7,7 @@ async function bootstrap() {
 
   // Enable CORS for frontend
   app.enableCors({
-    origin: process.env.CLIENT_URL,
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -22,7 +22,7 @@ async function bootstrap() {
   );
 
   const port = process.env.PORT || 3001; // Use 3001 to avoid conflict with Next.js
-  await app.listen(port, '0.0.0.0');
+  await app.listen(port);
   console.log(`Application is running on: http://localhost:${port}`);
 }
 bootstrap();
